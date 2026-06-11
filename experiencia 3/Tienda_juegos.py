@@ -26,11 +26,9 @@ def valida_string(msg:str)->str:
 
 def buscar_juego(id_juego:int) -> int | None:
     contador = 0
-    encontrado = False
     for i in listados_de_juegos:
 
         if i["id_juego"] == id_juego:
-            #encontrado = True
             return contador
         contador += 1
 
@@ -44,6 +42,39 @@ def agregar_juego(id_juego:int,nombre_juego:str,genero_juego:str,precio_juego:in
         "cantidad_juego":cantidad_juego,
     }
     listados_de_juegos.append(diccionario)
+
+
+def mostrar_juegos():
+    if len(listados_de_juegos) == 0:
+        print("No hay registros de juegos.")
+    else:
+        for i in listados_de_juegos:
+            print(f"NOMBRE: {i["nombre_juego"]} - PRECIO: ${i["precio_juego"]} - CANTIDAD: {i["cantidad_juego"]}")
+
+
+def eliminar_juego(posicion:int):
+    listados_de_juegos.pop(posicion)
+    print("Juego eliminado!!")
+
+
+def actualizar_juego(nombreJuego:str,
+                     generoJuego:str,precioJuego:int,
+                     cantidadJuego:int, posicion:int):
+    
+    juego_editar = listados_de_juegos[posicion]
+
+    juego_editar["nombre_juego"] = nombreJuego
+    juego_editar["genero_juego"] = generoJuego
+    juego_editar["precio_juego"] = precioJuego
+    juego_editar["cantidad_juego"] = cantidadJuego
+    print("Juego actualizado corectamente!!!")
+
+
+    
+
+    
+
+
 
 def menu():
     while True:
@@ -66,9 +97,41 @@ def menu():
             agregar_juego(id_juego,nombre_juego,genero_juego,precio_juego,cantidad_juego)
             print("Juego agregado")
         if opc == 2:
-            #print(listados_de_juegos)
-            print(buscar_juego(1))
+            mostrar_juegos()
+        if opc == 3:
+            id_juego = validar_numero_entero_positivo("Ingrese el id del juego a eliminar: ")
+            juego_encontrado = buscar_juego(id_juego)
+            if juego_encontrado == None:
+                print("Juego no encontrado.")
+            else:
+                eliminar_juego(juego_encontrado)
+
+
+        if opc == 4:
+            id_juego = validar_numero_entero_positivo("Ingrese el id del juego que desea actualizar: ")
+            juego_encontrado = buscar_juego(id_juego)
+
+            if juego_encontrado == None:
+                print("Juego no encontrado.")
+            else:
+                nombre_juego = valida_string("Ingrese el nuevo nombre del juego: ")
+                genero_juego = valida_string("Ingrese el nuevo genero del juego: ")
+                precio_juego = validar_numero_entero_positivo("Ingrese el nuevo precio del juego: ")
+                cantidad_juego = validar_numero_entero_positivo("Ingrese la nueva cantidad del juego: ")
+                actualizar_juego(nombre_juego,genero_juego,precio_juego,cantidad_juego,juego_encontrado)
+        if opc == 5:
+            print("Saliendo de la tienda de juegos!")
+            break
+
+            
 menu() 
+
+
+
+
+asd = {}
+
+asd.update()
 
 
 
